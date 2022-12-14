@@ -1,0 +1,20 @@
+package com.ssafy.home.model.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class User {
+	private String userId;
+	private String userPass;
+	private String userName;
+	private String email;
+	private String phone;
+	private String gender;
+	private String info;
+}

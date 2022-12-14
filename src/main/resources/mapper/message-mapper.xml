@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.model.repo.MessageRepo">
+	
+	 <select id="getMessageList" parameterType="map" resultType="messageDto">
+    	select ruser,suser,content,send_time
+		from message
+		where (ruser = #{me} and suser = #{you}) or (ruser = #{you} and suser = #{me})
+		order by send_time
+    </select>
+	
+	<insert id="insertMessage" parameterType="messageDto">
+		insert into message(suser,ruser,send_time,read_time,content,read_chk) 
+		values(#{suser},#{ruser},now(),now(),#{content},0);
+	</insert>
+	
+	<delete id="deleteMessageByUserId" parameterType="string">
+		delete from message where suser=#{userId} or ruser=#{userId};
+	</delete>
+</mapper>
