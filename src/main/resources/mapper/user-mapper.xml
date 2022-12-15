@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.model.repo.UserRepo">
+	
+	<select id="login" parameterType="user" resultMap="userMap">
+		select * from user where userId=#{userId} and userPass=#{userPass}
+	</select>
+	
+	<insert id="signup" parameterType="user">
+		insert into user(userId,userPass,userName,email,phone,gender,info) value(#{userId}, #{userPass}, #{userName}, #{email}, #{phone},#{gender},#{info})
+	</insert>
+	
+	<update id="updateUser" parameterType="user">
+		update user set userPass=#{userPass}, userName=#{userName}, email=#{email}, phone=#{phone},gender=#{gender},info=#{info} where userId=#{userId}
+	</update>
+	
+	<delete id="deleteUser" parameterType="string">
+		delete from user where userId=#{userId}
+	</delete>
+	
+	<resultMap type="user" id="userMap">
+		<id column="userId" property="userId" />
+		<result column="userPass" property="userPass" />
+		<result column="userName" property="userName" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="gender" property="gender"/>
+		<result column="info" property="info"/>
+	</resultMap>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from user
+		where userId = #{userid}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update user
+		set token = #{token}
+		where userId = #{userid}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update user
+		set token = #{token, jdbcType=VARCHAR}
+		where userId = #{userid}
+	</update>
+	
+	<select id="userInfo" parameterType="string" resultMap="userMap">
+		select *
+		from user
+		where userId = #{userid}
+	</select>
+	
+	<select id="userInfoByEmail" parameterType="string" resultMap="userMap">
+		select *
+		from user
+		where email = #{email}
+	</select>
+	
+	<select id="getUsers" parameterType="string" resultType="userIdDto">
+		select ruser as 'userId'
+		from message
+		where suser = #{userId}
+		union
+		select suser as 'userId'
+		from message
+		where ruser = #{userId}
+	</select>
+	
+	<insert id="signUp" parameterType="map">
+		insert into user(userId,userName,email,token) value(#{id}, #{name},#{email},#{token})
+	</insert>
+	
+</mapper>

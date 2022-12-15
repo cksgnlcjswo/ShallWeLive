@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.model.repo.RoommateRepo">
+	
+	<select id="getSeeker" parameterType="string" resultType="roommateDto">
+		select s.no as no,s.userId as userId, s.content as content,u.userName as name,u.email as email, u.phone as phone, u.info as info
+		from houseinfo hi inner join seek s using(aptCode) inner join user u using(userId)
+		where hi.apartmentName = #{aptName};
+	</select>
+	
+	<insert id="insertSeeker" parameterType="seekDto">
+		insert into seek(aptCode, userId,content,regTime) values(#{aptCode}, #{userId},#{content},now());
+	</insert>
+	
+	<delete id="deleteSeeker" parameterType="string">
+		delete from seek where userId = #{userId}
+	</delete>
+</mapper>

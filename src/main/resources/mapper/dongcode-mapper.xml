@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.model.repo.DongCodeRepo">
+	
+	<select id="searchByDongAndPrice" parameterType="map" resultType="aptInfo">
+		select hi.apartmentName as apartmentName, ANY_VALUE(hd.dealAmount) as dealAmount ,ANY_VALUE(hd.dealYear) as dealYear, 
+				ANY_VALUE(hd.dealMonth) as dealMonth, ANY_VALUE(hd.dealDay) as dealDay, ANY_VALUE(hd.area) as area,ANY_VALUE(hi.lng) as lng,ANY_VALUE(hi.lat) as lat
+		from housedeal hd, houseinfo hi 
+		where hd.aptCode = hi.aptCode and 
+			  hi.dongCode = #{dong} and
+			  cast( replace(hd.dealAmount, ',', '') as unsigned)  <![CDATA[ < ]]> #{price}
+			  group by hi.apartmentName
+			  
+	</select>
+	
+	<select id="getSido" resultType="sidoGugunDongCodeDto">
+		select distinct left(dongCode,2) sidoCode, sidoName
+		from dongCode
+		order by sidoCode
+	</select>
+	
+	<select id="getGugunInSido" parameterType="string" resultType="sidoGugunDongCodeDto">
+		select distinct left(dongCode,5) gugunCode, gugunName
+		from dongCode
+		where left(dongCode,2) = #{sido} and gugunName is not null
+		order by gugunCode
+	</select>
+	
+	<select id="getDongInGugun" parameterType="string" resultType="sidoGugunDongCodeDto">
+        select distinct dongCode, dongName
+        from dongCode
+        where left(dongCode, 5) = #{gugun} and dongName is not null
+        order by dongName
+    </select>
+    
+    <select id="getHouse" parameterType="string" resultType="houseInfo">
+    	select hi.buildYear, hi.roadName,hi.aptCode, hi.apartmentName, hi.jibun, d.sidoName, d.dongName, hd.area,avg(cast( replace(hd.dealAmount, ',', '') as unsigned)) as dealAmount
+		from houseinfo hi inner join dongcode d using(dongCode) inner join housedeal hd using(aptCode)
+		where hi.apartmentName = #{aptName};
+    </select>
+    <select id="getHouseHistory" parameterType="string" resultType="houseHistory">
+    	select hd.dealYear,hd.dealMonth,cast( replace(hd.dealAmount, ',', '') as unsigned) as dealAmount
+		from houseinfo hi inner join housedeal hd using(aptCode)
+		where hi.apartmentName = #{aptName}
+		order by hd.dealYear desc, hd.dealMonth desc 
+		limit 15;
+    </select>
+</mapper>
