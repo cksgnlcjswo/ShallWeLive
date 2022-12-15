@@ -35,10 +35,10 @@ public class CrawlerRestController {
 	private CrawlerService crawlerService;
 	
 	@Value("${naver.news.clientId}")
-	private String clientId; //애플리케이션 클라이언트 아이디
+	private String clientId; 
     
 	@Value("${naver.news.clientSecret}")
-	private String clientSecret; //애플리케이션 클라이언트 시크릿
+	private String clientSecret;
     
     @GetMapping("/news")
     public ResponseEntity<?> getNews() {
