@@ -22,16 +22,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SuppressWarnings("unchecked")
 public class SwaggerConfiguration {
 	
-	private String version = "V1";
-	private String title = "SSAFY Board-Vuejs API " + version;
+	private String title = "Shall We Live API ";
 
 	private ApiInfo apiInfo() {
-		String descript = "SSAFY Vuejs API Reference for Developers<br>";
-		//descript += "<img src=\"http://localhost:9999/static/assets/img/ssafy_logo.png\">";
+		String descript = "Shall We Live API Reference for Developers<br>";
+		
 		return new ApiInfoBuilder().title(title).description(descript)
 //				.termsOfServiceUrl("https://edu.ssafy.com")
-				.contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com")).license("SSAFY License")
-				.licenseUrl("ssafy@ssafy.com").version("1.0").build();
+				.contact(new Contact("karin kim", "https://cksgnlcjswo.tistory.com/", "cksgnlcjswoo@naver.com")).license("MIT License")
+				.licenseUrl("not registered").version("1.0").build();
 	}
 
 	// API마다 구분짓기 위한 설정.
@@ -46,11 +45,15 @@ public class SwaggerConfiguration {
 	}
 
 	@Bean
-	public Docket commonApi() {
-		return getDocket("아파트", Predicates.or(PathSelectors.regex("/map.*")));
-
+	public Docket aptApi() {
+		return getDocket("아파트", Predicates.or(PathSelectors.regex("/apt.*")));
 	}
 
+	@Bean
+	public Docket crawlerApi() {
+		return getDocket("크롤링 결과", Predicates.or(PathSelectors.regex("/crawler.*")));
+	}
+	
 	@Bean
 	public Docket allApi() {
 		return getDocket("전체", Predicates.or(PathSelectors.regex("/*.*")));
