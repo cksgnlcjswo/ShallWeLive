@@ -25,7 +25,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-//http://localhost:9999/vue/swagger-ui.html
+//http://localhost:9999/swagger-ui.html
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
 @RequestMapping("/board")
@@ -85,8 +85,10 @@ public class BoardRestController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "특정 유저가 쓴 글삭제", notes = "특정 user가 쓴  게시글을 삭제한다. 그리고 DB삭제 성공시 'success' 실패시 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<String> deleteArticleByUserId(@PathVariable("userId")  @ApiParam(value = "삭제할 글의 글번호.", required = true) String userId) throws Exception {
+	public ResponseEntity<String> deleteArticleByUserId(@PathVariable("userId")  @ApiParam(value = "유저 id", required = true) String userId) throws Exception {
+		
 		logger.info("deleteArticle - 호출");
 		if (boardService.deleteArticleByUserId(userId)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
