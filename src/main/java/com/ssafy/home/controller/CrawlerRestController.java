@@ -63,15 +63,18 @@ public class CrawlerRestController {
          
          JSONParser parser = new JSONParser();
         
+         //json response에 있는 items 객체 가져오기
          try {
         	 JSONObject jObj = (JSONObject)parser.parse(responseBody);
         	 JSONArray jarr = (JSONArray)jObj.get("items");
         	 
+        	 //여러 내용중 첫번째만 가져오겠다.
         	 JSONObject obj = (JSONObject)jarr.get(0);
+        	 
+        	 //해당 기사의 링크정보, 설명, 발행 일자 가져오기
         	 result.put("link",obj.get("originallink"));
         	 result.put("desc",obj.get("description"));
         	 result.put("pubDate",obj.get("pubDate"));
-        	 //log.info("{}",obj.get("originallink"));
 			
          } catch (ParseException e) {
 			
