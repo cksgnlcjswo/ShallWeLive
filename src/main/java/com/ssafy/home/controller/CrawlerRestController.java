@@ -10,7 +10,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.home.model.service.CrawlerService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
@@ -41,8 +41,10 @@ public class CrawlerRestController {
 	@Value("${naver.news.clientSecret}")
 	private String clientSecret;
     
+	@ApiOperation(value="부동상 관련 뉴스정보",notes="부동산 뉴스 크롤링",response=String.class)
     @GetMapping("/news")
     public ResponseEntity<?> getNews() {
+		log.info("crawler getnews - 호출");
     	 String word = null;
     	 Map<String,Object> result = new HashMap<>();
     	 
