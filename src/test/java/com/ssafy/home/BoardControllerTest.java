@@ -1,9 +1,13 @@
 package com.ssafy.home;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,6 +88,28 @@ public class BoardControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.articleno",is(aNo)));	
 	}
+	
+	@DisplayName("게시글 수정 테스트")
+	@Test
+	public void updateArticle() throws Exception {
+		BoardDto boardDto = BoardDto.builder()
+				.articleno(1)
+				.userid("ssafy")
+				.subject("updated title")
+				.content("updated contents")
+				.hit(0).build();
+		
+		when(boardService.modifyArticle(any())).thenReturn(true);
+	
+		mock.perform(put("/board")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(toJson(boardDto)))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("success")));
+	}
+	
+	
+	
 	
 	private static String toJson(BoardDto board) {
 		
