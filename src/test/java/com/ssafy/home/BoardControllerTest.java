@@ -1,14 +1,17 @@
 package com.ssafy.home;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +37,9 @@ public class BoardControllerTest {
 	@MockBean
 	BoardService boardService;
 	
-	//book inserttest
+	@DisplayName("게시글 삽입 TEST")
 	@Test
-	public void bookInsertTest() throws Exception {
+	public void boardInsertTest() throws Exception {
 		
 		BoardDto board = BoardDto.builder()
 								.userid("ssafy")
@@ -52,14 +55,34 @@ public class BoardControllerTest {
 				.andExpect(status().isOk());
 	}
 	
-	//listArticle test
+	@DisplayName("게시글 리스트 테스트")
 	@Test
-	public void bookListTest() throws Exception {
+	public void boardkListTest() throws Exception {
 		List<BoardDto> arr = new ArrayList<>();
 		when(boardService.listArticle()).thenReturn(arr);
 		
 		mock.perform(get("/board"))
 			.andExpect(status().isOk());
+	}
+	
+	@DisplayName("특정 게시글 테스트")
+	@Test
+	public void getArticleTest() throws Exception {
+		
+		int aNo = 99;
+		
+		BoardDto board = BoardDto.builder()
+				.articleno(aNo)
+				.userid("ssafy")
+				.subject("test 제목")
+				.content("test contet")
+				.hit(0).build();
+		
+		when(boardService.getArticle(aNo)).thenReturn(board);
+	
+		mock.perform(get("/board/{aNo}",aNo))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.articleno",is(aNo)));	
 	}
 	
 	private static String toJson(BoardDto board) {
