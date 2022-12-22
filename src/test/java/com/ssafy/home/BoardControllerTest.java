@@ -1,14 +1,16 @@
 package com.ssafy.home;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
-import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,6 +34,7 @@ public class BoardControllerTest {
 	@MockBean
 	BoardService boardService;
 	
+	//book inserttest
 	@Test
 	public void bookInsertTest() throws Exception {
 		
@@ -48,7 +51,17 @@ public class BoardControllerTest {
 				.content(toJson(board)))
 				.andExpect(status().isOk());
 	}
-
+	
+	//listArticle test
+	@Test
+	public void bookListTest() throws Exception {
+		List<BoardDto> arr = new ArrayList<>();
+		when(boardService.listArticle()).thenReturn(arr);
+		
+		mock.perform(get("/board"))
+			.andExpect(status().isOk());
+	}
+	
 	private static String toJson(BoardDto board) {
 		
 		try {
