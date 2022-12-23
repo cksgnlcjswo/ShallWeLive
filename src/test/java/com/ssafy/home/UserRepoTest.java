@@ -61,14 +61,4 @@ public class UserRepoTest {
 		assertEquals(result, 1);
 	}
 	
-//	@Test
-//	public void deleteUserTest() throws SQLException {
-//		// when
-//		//int resultInter = irepo.delete어쩌고이거 유저랑 관련된 interestarea 정보 다 지워줘야해
-//		int result = urepo.deleteUser("ssafy");
-//		// then
-//		assertEquals(result, 1); // (result * resultInter, 1)
-//	}
-	
-	
 }

@@ -15,25 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class WhereIsMyHomeProjectApplicationTests {
 	
-//	@Autowired
-//	HouseInfoRepo houseInfoRepo;
-//	
-//	@Autowired
-//	DongCodeRepo dongCode;
-//	
-//	@Autowired
-//	GugunCodeRepo gugunCodeRepo;
-//	
-//	@Autowired
-//	HouseDealRepo houseDealRepo;
-//	
-//	@Autowired
-//	HouseInfoRepo houseInfoRepo;
-//	
-//	@Autowired
-//	SidoCodeRepo sidoCodeRepo;
-	
-	
 	@Autowired
 	SqlSessionFactory factory;
 	
