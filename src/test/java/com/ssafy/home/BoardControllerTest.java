@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -108,7 +109,31 @@ public class BoardControllerTest {
 				.andExpect(content().string(containsString("success")));
 	}
 	
+	@DisplayName("게시글 삭제 테스트")
+	@Test
+	public void boardDeleteTest() throws Exception {
+		
+		int articleno = 1;
+		
+		when(boardService.deleteArticle(articleno)).thenReturn(true);
+		
+		mock.perform(delete("/board/delete/{articleno}",articleno))
+			.andExpect(status().isOk())
+			.andExpect(content().string(containsString("success")));
+	}
 	
+	@DisplayName("특정 유저가쓴 글 모두 삭제 테스트")
+	@Test
+	public void boardDeleteByUserIdTesT() throws Exception {
+		
+		String userId = "ssafy";
+		
+		when(boardService.deleteArticleByUserId(userId)).thenReturn(true);
+		
+		mock.perform(delete("/board/{userId}",userId))
+		.andExpect(status().isOk())
+		.andExpect(content().string(containsString("success")));
+	}
 	
 	
 	private static String toJson(BoardDto board) {
