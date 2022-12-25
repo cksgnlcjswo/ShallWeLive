@@ -1,4 +1,4 @@
-package com.ssafy.home;
+package com.ssafy.home.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.CoreMatchers.containsString;

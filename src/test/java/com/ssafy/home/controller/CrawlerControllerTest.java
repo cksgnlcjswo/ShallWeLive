@@ -1,4 +1,4 @@
-package com.ssafy.home;
+package com.ssafy.home.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
