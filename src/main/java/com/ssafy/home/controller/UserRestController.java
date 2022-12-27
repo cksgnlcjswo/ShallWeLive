@@ -88,24 +88,6 @@ public class UserRestController {
 		}
 	}
 	
-	@GetMapping("/login/oauth2/code/google")
-    public ResponseEntity<Map<String, Object> > oauthLogin(String code) throws Exception {
-        log.info("after redirected");
-		User user = userService.oauthLogin(code);
-        
-        Map<String, Object> resultMap = new HashMap<>();
-        String accessToken = jwtService.createAccessToken("userid", user.getUserId());// key, data
-		String refreshToken = jwtService.createRefreshToken("userid", user.getUserId());// key, data
-		userService.saveRefreshToken(user.getUserId(), refreshToken);
-		log.debug("로그인 accessToken 정보 : {}", accessToken);
-		log.debug("로그인 refreshToken 정보 : {}", refreshToken);
-		resultMap.put("access-token", accessToken);
-		resultMap.put("refresh-token", refreshToken);
-		resultMap.put("message", SUCCESS);
-        
-        return new ResponseEntity<Map<String, Object>> (resultMap, HttpStatus.OK);
-    }
-	
 	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(

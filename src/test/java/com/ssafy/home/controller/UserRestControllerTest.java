@@ -1,7 +1,9 @@
 package com.ssafy.home.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -74,6 +76,40 @@ public class UserRestControllerTest {
 				.content(toJson(user)))
 				.andExpect(status().is5xxServerError());
 	}
+	
+	@DisplayName("회원 수정 테스트")
+	@Test
+	public void userUpdateTest() throws Exception {
+		User user = User.builder()
+				.userId("testId")
+				.userPass("1234")
+				.userName("testuser")
+				.email("11@namver.com")
+				.phone("010-1234-5678")
+				.gender("G")
+				.info("hihi").build();
+		
+		when(userService.updateUser(user)).thenReturn(1);
+		
+		mock.perform(put("/user")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(toJson(user)))
+					.andExpect(status().isOk());
+	}
+	
+	@DisplayName("아이디 삭제 테스트")
+	@Test
+	public void userDeleteTest() throws Exception {
+		
+		String userId = "ssafy";
+		
+		when(userService.deleteUser(userId)).thenReturn(1);
+		
+		mock.perform(delete("/user/{userId}",userId))
+			.andExpect(status().isOk());
+	}
+	
+	
 	
 	private static String toJson(User user) {
 		
