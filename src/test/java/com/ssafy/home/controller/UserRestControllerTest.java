@@ -1,14 +1,17 @@
 package com.ssafy.home.controller;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -142,8 +145,9 @@ public class UserRestControllerTest {
 		mock.perform(post("/user/login")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(toJson(user)))
-			.andExpect(status().isAccepted());
-		
+			.andExpect(status().isAccepted())
+			.andExpect(jsonPath("$.access-token").exists())
+			.andExpect(jsonPath("$.refresh-token").exists());
 	}
 	
 	//jwt 생성함수
