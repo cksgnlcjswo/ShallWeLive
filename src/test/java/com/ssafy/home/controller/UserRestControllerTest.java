@@ -1,5 +1,6 @@
 package com.ssafy.home.controller;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -150,6 +151,27 @@ public class UserRestControllerTest {
 			.andExpect(jsonPath("$.refresh-token").exists());
 	}
 	
+	@DisplayName("로그인 실패 테스트")
+	@Test
+	public void loginFailTest() throws Exception {
+		User user = User.builder()
+				.userId("testId")
+				.userPass("1234")
+				.userName("testuser")
+				.email("11@namver.com")
+				.phone("010-1234-5678")
+				.gender("G")
+				.info("hihi").build();
+		
+		when(userService.login(user)).thenReturn(null);
+		when(jwtService.createAccessToken("userid", user.getUserId())).thenReturn(create("userid", user.getUserId(), "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES));
+		when(jwtService.createRefreshToken("userid", user.getUserId())).thenReturn(create("userid", user.getUserId(), "refresh-token", 1000 * 60 * 60 * 24 * 7 * REFRESH_TOKEN_EXPIRE_MINUTES));
+		
+		mock.perform(post("/user/login")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(toJson(user)))
+			.andExpect(jsonPath("$.message",containsString("fail")));
+	}
 	//jwt 생성함수
 	public <T> String create(String key, T data, String subject, long expire) {
 		String jwt = Jwts.builder()
