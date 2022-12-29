@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -80,11 +81,12 @@ public class AptRestController {
 	}
 	
 	@ApiOperation(value = "시도 정보", notes = "전국의 시도를 반환한다.", response = List.class)
+	@Cacheable(value="sido", key="0")
 	@GetMapping("/sido")
 	public ResponseEntity<List<SidoGugunDongCodeDto>> sido() throws Exception {
 		log.info("sido - 호출");
 		return new ResponseEntity<List<SidoGugunDongCodeDto>>(aptService.getSido(), HttpStatus.OK);
-	}
+	}	
 
 	@ApiOperation(value = "구군 정보", notes = "전국의 구군을 반환한다.", response = List.class)
 	@GetMapping("/gugun")

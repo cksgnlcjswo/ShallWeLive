@@ -1,11 +1,14 @@
 package com.ssafy.home.model.dto;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "SidoGugunDongCodeDto : 시도, 구군정보", description = "시도, 구군의 이름을 나타낸다.")
-public class SidoGugunDongCodeDto {
-
+public class SidoGugunDongCodeDto implements Serializable{
+	
+	private static final long serialVersionUID = -6184044926029805156L;
 	@ApiModelProperty(value = "시도코드")
 	private String sidoCode;
 	@ApiModelProperty(value = "시도이름")
