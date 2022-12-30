@@ -1,9 +1,9 @@
 package com.ssafy.home.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -12,10 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
-import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -173,8 +173,27 @@ public class UserRestControllerTest {
 			.andExpect(jsonPath("$.message",containsString("fail")));
 	}
 	
-	
-	
+	@DisplayName("회원정보 반환 테스트")
+	@Test
+	public void getUserInfoTest() throws Exception {
+		
+		User user = User.builder()
+				.userId("testId")
+				.userPass("1234")
+				.userName("testuser")
+				.email("11@namver.com")
+				.phone("010-1234-5678")
+				.gender("G")
+				.info("hihi").build();
+		
+		when(userService.userInfo("testId")).thenReturn(user);
+		when(jwtService.checkToken(Mockito.<String>any())).thenReturn(true);
+		
+		mock.perform(get("/user/info/{userid}","testId")
+			.header("access-token", create("userid", user.getUserId(), "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES)))
+			.andExpect(status().isAccepted());
+	}
+ 	
 	//jwt 생성함수
 	public <T> String create(String key, T data, String subject, long expire) {
 		String jwt = Jwts.builder()
