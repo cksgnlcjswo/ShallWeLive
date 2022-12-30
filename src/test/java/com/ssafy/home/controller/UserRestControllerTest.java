@@ -172,6 +172,9 @@ public class UserRestControllerTest {
 			.content(toJson(user)))
 			.andExpect(jsonPath("$.message",containsString("fail")));
 	}
+	
+	
+	
 	//jwt 생성함수
 	public <T> String create(String key, T data, String subject, long expire) {
 		String jwt = Jwts.builder()

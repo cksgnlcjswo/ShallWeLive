@@ -119,27 +119,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User oauthLogin(String code) {
-		ResponseEntity<String> accessTokenResponse = oauthService.createPostRequest(code);
-        OAuthToken oAuthToken = oauthService.getAccessToken(accessTokenResponse);
-        log.info("Access Token: {}", oAuthToken.getAccessToken());
-
-        ResponseEntity<String> userInfoResponse = oauthService.createGetRequest(oAuthToken);
-        GoogleUser googleUser = oauthService.getUserInfo(userInfoResponse);
-        log.info("Google User Name: {}", googleUser.getName());
-
-        //user가 등록이 되있지 않다면 등록
-        if (repo.userInfoByEmail(googleUser.getEmail())==null) {
-        	log.info("signup!! email {}",googleUser.getEmail());
-            signUp(googleUser, oAuthToken);
-        }
-        
-        return repo.userInfoByEmail(googleUser.getEmail());
-//        
-//        return jwtService.createAccessToken("userid", user.getEmail());
-	}
-
-	@Override
 	public void signUp(GoogleUser googleUser, OAuthToken oAuthToken) {
 		
 		Map<String, Object> map = new HashMap<>();
