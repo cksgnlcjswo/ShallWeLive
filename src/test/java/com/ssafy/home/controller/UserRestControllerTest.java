@@ -1,6 +1,7 @@
 package com.ssafy.home.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -194,6 +195,14 @@ public class UserRestControllerTest {
 			.andExpect(status().isAccepted());
 	}
  	
+	@DisplayName("로그아웃 테스트")
+	@Test
+	public void logoutTest() throws Exception {
+		
+		mock.perform(get("/user/logout/{userid}","ssafy"))
+				.andExpect(status().isAccepted());
+	}
+	
 	//jwt 생성함수
 	public <T> String create(String key, T data, String subject, long expire) {
 		String jwt = Jwts.builder()
