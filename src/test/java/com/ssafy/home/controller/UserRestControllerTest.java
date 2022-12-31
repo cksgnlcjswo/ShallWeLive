@@ -203,6 +203,32 @@ public class UserRestControllerTest {
 				.andExpect(status().isAccepted());
 	}
 	
+	@DisplayName("액세스 토큰 재발급 테스트")
+	@Test
+	public void getRefreshToken() throws Exception {
+		//리프레쉬 토큰 생성
+		User user = User.builder()
+				.userId("testId")
+				.userPass("1234")
+				.userName("testuser")
+				.email("11@namver.com")
+				.phone("010-1234-5678")
+				.gender("G")
+				.info("hihi").build();
+		String token = create("userid",user.getUserId(), "refresh-token", 1000 * 60 * REFRESH_TOKEN_EXPIRE_MINUTES);
+		
+		when(jwtService.checkToken(Mockito.<String>any())).thenReturn(true);
+		when(userService.getRefreshToken(Mockito.<String>any())).thenReturn(token);
+		when(jwtService.createAccessToken("userid", user.getUserId())).thenReturn(create("userid", user.getUserId(), "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES));
+		
+		mock.perform(post("/user/refresh")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(toJson(user))
+					.header("refresh-token", token))
+					.andExpect(status().isAccepted())
+					.andExpect(jsonPath("$.access-token").exists());
+	}
+	
 	//jwt 생성함수
 	public <T> String create(String key, T data, String subject, long expire) {
 		String jwt = Jwts.builder()
