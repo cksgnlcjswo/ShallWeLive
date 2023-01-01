@@ -72,30 +72,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<DongCode> interestArea(String id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int addArea(String dongCode, String userId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean isExistId(String str) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void saveRefreshToken(String userid, String refreshToken) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userid", userid);
 		map.put("token", refreshToken);
 		repo.saveRefreshToken(map);
-		
 	}
 
 	@Override

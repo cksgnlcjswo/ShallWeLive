@@ -13,9 +13,6 @@ public interface UserService {
 	int signup(User user) throws SQLException;
 	int updateUser(User user) throws SQLException;
 	int deleteUser(String userId) throws SQLException;
-	List<DongCode> interestArea(String id) throws SQLException;
-	int addArea(String dongCode, String userId) throws SQLException;
-	boolean isExistId(String str) throws SQLException;
 	public void saveRefreshToken(String userid, String refreshToken) throws Exception;
 	public Object getRefreshToken(String userid) throws Exception;
 	public void deleRefreshToken(String userid) throws Exception;
