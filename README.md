@@ -23,14 +23,12 @@
 ## <b>UI 설계<b><br>
 
 ## <b>DB설계<b><br>
-
+![ERD](https://user-images.githubusercontent.com/60818059/210371711-1f8f6fdd-cee5-44f8-9720-04e704f0eab6.png)
 ## <b>기능<b><br>
 - 로그인,회원가입
 - 게시판
 - 1:1 쪽지기능
-- 주소별 아파트 거래 정보(매매)
-- 
-
+- 주소별 아파트 거래 정보(매매) 
 
 ## you can visit frontend part here
 https://github.com/cksgnlcjswo/ShallWeLive-frontend
