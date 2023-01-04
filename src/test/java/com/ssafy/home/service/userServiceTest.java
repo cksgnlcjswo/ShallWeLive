@@ -24,7 +24,7 @@ public class userServiceTest {
 	private UserService userService;
 	
 	@MockBean
-	UserRepo uRepo;
+	private UserRepo uRepo;
 	
 	@DisplayName("login service 성공 테스트")
 	@Test
