@@ -1,6 +1,7 @@
 package com.ssafy.home.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
@@ -43,5 +44,22 @@ public class userServiceTest {
 		
 		User result = userService.login(user);
 		assertNotNull(result);
+	}
+	
+	@Test
+	public void signupTest() throws Exception {
+		User user = User.builder()
+				.userId("testId")
+				.userPass("1234")
+				.userName("testuser")
+				.email("11@namver.com")
+				.phone("010-1234-5678")
+				.gender("G")
+				.info("hihi").build();
+		
+		when(uRepo.signup(Mockito.<User>any())).thenReturn(1);
+		int result = userService.signup(user);
+		
+		assertEquals(result, 1);
 	}
 }
