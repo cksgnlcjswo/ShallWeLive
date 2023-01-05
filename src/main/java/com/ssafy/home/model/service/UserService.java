@@ -3,9 +3,6 @@ package com.ssafy.home.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.ssafy.home.model.dto.DongCode;
-import com.ssafy.home.model.dto.GoogleUser;
-import com.ssafy.home.model.dto.OAuthToken;
 import com.ssafy.home.model.dto.User;
 
 public interface UserService {
@@ -17,6 +14,5 @@ public interface UserService {
 	public Object getRefreshToken(String userid) throws Exception;
 	public void deleRefreshToken(String userid) throws Exception;
 	User userInfo(String userid);
-	void signUp(GoogleUser googleUser, OAuthToken oAuthToken);
 	User userInfoByEmail(String email);
 }

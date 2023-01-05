@@ -11,18 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.home.model.dto.DongCode;
-import com.ssafy.home.model.dto.GoogleUser;
-import com.ssafy.home.model.dto.OAuthToken;
 import com.ssafy.home.model.dto.User;
 import com.ssafy.home.model.repo.BoardRepo;
 import com.ssafy.home.model.repo.MessageRepo;
 import com.ssafy.home.model.repo.RoommateRepo;
 import com.ssafy.home.model.repo.UserRepo;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
-@Slf4j
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
@@ -39,9 +34,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	JwtService jwtService;
-	
-	@Autowired
-	OAuthService oauthService;
 	
 	@Override
 	public User login(User user) throws SQLException {
@@ -97,17 +89,6 @@ public class UserServiceImpl implements UserService {
 	public User userInfo(String userid) {
 		
 		return repo.userInfo(userid);
-	}
-
-	@Override
-	public void signUp(GoogleUser googleUser, OAuthToken oAuthToken) {
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("email", googleUser.getEmail());
-		map.put("token", oAuthToken.getAccessToken());
-		map.put("id", googleUser.getId());
-		map.put("name",googleUser.getName());
-		repo.signUp(map);
 	}
 
 	@Override

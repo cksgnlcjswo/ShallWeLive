@@ -101,4 +101,23 @@ public class userServiceTest {
 		
 		assertEquals(result,1);
 	}
+	
+	@DisplayName("user 정보 가져오기")
+	@Test
+	public void userInfoTest() throws Exception {
+		User user = User.builder()
+				.userId("testId")
+				.userPass("1234")
+				.userName("testuser")
+				.email("11@namver.com")
+				.phone("010-1234-5678")
+				.gender("G")
+				.info("hihi").build();
+		
+		when(uRepo.userInfo(Mockito.<String>any())).thenReturn(user);
+		
+		User result = userService.userInfo("testId");
+		
+		assertEquals(result.getUserId(), "testId");
+	}
 }
