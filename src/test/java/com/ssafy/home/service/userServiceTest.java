@@ -46,6 +46,7 @@ public class userServiceTest {
 		assertNotNull(result);
 	}
 	
+	@DisplayName("signup 서비스 test")
 	@Test
 	public void signupTest() throws Exception {
 		User user = User.builder()
