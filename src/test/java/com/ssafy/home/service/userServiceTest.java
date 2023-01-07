@@ -120,4 +120,24 @@ public class userServiceTest {
 		
 		assertEquals(result.getUserId(), "testId");
 	}
+	
+	@DisplayName("email로 유저정보 가져오기")
+	@Test
+	public void saveRefreshTokenTest() throws Exception {
+		
+		User user = User.builder()
+				.userId("testId")
+				.userPass("1234")
+				.userName("testuser")
+				.email("11@namver.com")
+				.phone("010-1234-5678")
+				.gender("G")
+				.info("hihi").build();
+		
+		when(uRepo.userInfoByEmail(Mockito.<String>any())).thenReturn(user);
+		
+		User result = userService.userInfoByEmail("11@namver.com");
+		
+		assertEquals(user,result);
+	}
 }
