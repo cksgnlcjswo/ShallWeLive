@@ -58,8 +58,8 @@ public class AptRestController {
 	//동과 price를 주면 price이하의 아파트 리스트 반환
 	@ApiOperation(value = "아파트 리스트", notes = "price 이하의 아파트 반환")
 	@GetMapping("/list")
-	public ResponseEntity<?> listApt(@RequestParam String dong,
-									 @RequestParam String price) throws SQLException {
+	public ResponseEntity<?> listApt(@RequestParam @ApiParam(value = "아파트 동", required = true)String dong,
+									 @RequestParam @ApiParam(value = "가격", required = true) String price) throws SQLException {
 		
 		log.info("dong {}, price {}",dong, price);
 		
