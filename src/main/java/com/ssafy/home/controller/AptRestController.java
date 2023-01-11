@@ -45,7 +45,7 @@ public class AptRestController {
 		
 		return new ResponseEntity<HouseInfo>(result,HttpStatus.OK);
 	}
-	
+	@ApiOperation(value = "아파트 과거이력", notes = "아파트 과거 히스토리가격")
 	@GetMapping("/history")
 	public ResponseEntity<?> getAptHistory(@RequestParam String aptName) {
 		log.info("aptName {}",aptName);
