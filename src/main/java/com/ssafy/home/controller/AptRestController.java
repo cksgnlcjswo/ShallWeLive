@@ -37,6 +37,7 @@ public class AptRestController {
 	@Autowired
 	AptService aptService;
 	
+	@ApiOperation(value = "아파트 정보", notes = "아파트 정보반환",response=HouseInfo.class)
 	@GetMapping
 	public ResponseEntity<?> getApt(@RequestParam String aptName) {
 		log.info("aptName {}",aptName);
