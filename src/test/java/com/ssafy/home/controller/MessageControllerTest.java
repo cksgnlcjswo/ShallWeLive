@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.ssafy.home.model.dto.MessageDto;
 import com.ssafy.home.model.dto.UserIdDto;
 import com.ssafy.home.model.service.MessageService;
 
@@ -42,6 +44,20 @@ public class MessageControllerTest {
 		when(messageService.getUsers(Mockito.<String>any())).thenReturn(users);
 		
 		mock.perform(get("/message/users").param("userId", "test"))
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void getMessageListTest() throws Exception {
+		
+		List<MessageDto> mList = new ArrayList<>();
+		
+		mList.add(new MessageDto("test1","test2","hi","2022-01-02"));
+		//mList.add(new MessageDto("test2","test1","hello","2022-01-02"));
+	
+		when(messageService.getMessageList(Mockito.<Map<String,Object>>any())).thenReturn(mList);
+		
+		mock.perform(get("/message").param("me", "test1").param("you", "test2"))
 			.andExpect(status().isOk());
 	}
 }
