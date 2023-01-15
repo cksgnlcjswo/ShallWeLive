@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
@@ -33,6 +34,7 @@ public class MessageControllerTest {
 	@Autowired
 	private MockMvc mock;
 	
+	@DisplayName("채팅 상대 가져오기 테스트")
 	@Test
 	public void getUsersTest() throws Exception {
 		
@@ -47,6 +49,7 @@ public class MessageControllerTest {
 			.andExpect(status().isOk());
 	}
 	
+	@DisplayName("상대방 채팅내역 가져오기 테스트")
 	@Test
 	public void getMessageListTest() throws Exception {
 		
