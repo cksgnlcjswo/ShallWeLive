@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +30,7 @@ public class CrawlerControllerTest {
 		})).build();
 	}
 	
+	@DisplayName("크롤링 테스트")
 	@Test
 	public void crawlerTest() throws Exception {
 		mock.perform(get("/crawler/news"))
