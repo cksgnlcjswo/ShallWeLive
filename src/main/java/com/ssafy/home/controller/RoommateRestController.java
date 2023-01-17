@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/roommate")
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
-@Slf4j
 public class RoommateRestController {
 	
 	private static final String SUCCESS = "success";
