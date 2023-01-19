@@ -20,6 +20,7 @@ import com.ssafy.home.model.dto.RoommateDto;
 import com.ssafy.home.model.dto.SeekDto;
 import com.ssafy.home.model.service.RoommateService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -33,6 +34,7 @@ public class RoommateRestController {
 	@Autowired
 	RoommateService roommateService;
 	
+	@ApiOperation(value="하우스메이트들",notes="하우스메이트 보여주기",response=List.class)
 	@GetMapping
 	public ResponseEntity<?> getSeeker(@RequestParam String aptName) {
 		
